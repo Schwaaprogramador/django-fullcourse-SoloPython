@@ -1,17 +1,22 @@
 
 from pathlib import Path
 import os
+import environ
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+env=environ.Env()
+environ.Env.read_env()
 
-SECRET_KEY = 'django-insecure-*!mvtkk(o%3r0g444d!+z+93u60y!x0e)6o^v74*qr4fp+2=r)'
+BASE_DIR = Path(__file__).resolve().parent.parent # Hace referencia al archivo donde se escuentra el proyecto. [Django-fullcourse-solopython]
 
+#SECRET_KEY = 'django-insecure-*!mvtkk(o%3r0g444d!+z+93u60y!x0e)6o^v74*qr4fp+2=r)' #Esto hay que modificarlo con una variable de ambiente.
+SECRET_KEY=os.environ.get('SECRET_KEY')
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*'] #Configurar a '*' para permitir todo.
 
 # Application definition
-
+#Vienen app instaladas por default con django: admin, auth,content, session, messages, staticfiles.
+#Dentro de las app se tiene que poner cada una de las nuevas apps[Como los componentes de React]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -19,7 +24,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
+    
+    'core', #agregamos el corea las apps.
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -50,12 +57,12 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application' #Para que las imagenes se entiendan. Sirve para desplegar.
 
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+# posgrestSQL
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -99,7 +106,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
+# Aca se anadiran las imagenes
 STATIC_URL = '/static/'
 
 # Default primary key field type
